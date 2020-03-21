@@ -1,0 +1,70 @@
+<div class="tasksTable">
+
+  <app-filter *ngIf="tasksService.tasks.length"></app-filter>
+
+  <table class="table" *ngIf="tasksService.tasks.length>0; else empty">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Rate</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let task of tasksService.tasks | tasksfilter: tasksService.filter" [ngClass]="{
+      completed: task.completed,
+      selected: selectedTasks.includes(task.id)
+      }">
+      <th scope="row">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            (change)="onSelect(task.id)"
+            [checked]="selectedTasks.includes(task.id)"
+          />
+        </div>
+      </th>
+      <td>
+        <div>
+          <span class="badge badge-danger" *ngIf="!task.completed && task.deadlineDate && dateNow >= task.deadlineDate">Expired</span>
+        </div>
+        <a routerLink="/edit/{{task.id}}">{{ task.name }}</a>
+        <small class="completedDate" *ngIf="task.completed">Completed
+          at: {{ task.completedDate | date: 'short' }}</small>
+      </td>
+      <td>
+        <span class="badge badge-success" *ngIf="task.rate === tasksService.rates.normal">{{task.rate}}</span>
+        <span class="badge badge-warning" *ngIf="task.rate === tasksService.rates.high">{{task.rate}}</span>
+        <span class="badge badge-danger" *ngIf="task.rate === tasksService.rates.highest">{{task.rate}}</span>
+      </td>
+      <td>
+        <button type="button" class="btn btn-outline-warning btn-sm" (click)="onEdit(task.id)">
+          <fa-icon [icon]="iconEdit"></fa-icon>
+        </button>
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="onRemove(task.id)">
+          <fa-icon [icon]="iconRemove"></fa-icon>
+        </button>
+        <button type="button" class="btn btn-outline-success btn-sm" (click)="onChange(task.id)">
+          <span *ngIf="task.completed">Reopen</span>
+          <span *ngIf="!task.completed">Done</span>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<button type="button" class="btn btn-danger"
+        *ngIf="selectedTasks.length && (tasksService.tasks | tasksfilter: tasksService.filter).length"
+        (click)="multiRemove()">Delete selected
+  tasks
+</button>
+
+<ng-template #empty>
+  <app-alert
+    [type]="'danger'"
+    [text]="'No tasks'"
+  ></app-alert>
+</ng-template>

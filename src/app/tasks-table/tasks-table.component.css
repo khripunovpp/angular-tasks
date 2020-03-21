@@ -1,0 +1,22 @@
+.completed {
+  opacity: .5;
+}
+.selected {
+  background-color: #e8e8e8;
+}
+.table {
+  table-layout: fixed;
+}
+
+.table td:first-child,
+.table th:first-child{
+  width: 50px;
+}
+
+.table td:last-child{
+  display: flex;
+  justify-content: space-between;
+}
+.completedDate {
+  display: block;
+}
