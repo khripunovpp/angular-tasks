@@ -11,7 +11,7 @@ export class FilterComponent {
   filter: string;
   rates = Array.prototype.concat(['all'], Object.keys(EnumRates));
 
-  constructor(private tasksService: TasksService) {
+  constructor(public tasksService: TasksService) {
   }
 
   onFilter(filter: EnumRates) {

@@ -16,7 +16,7 @@ export class TasksTableComponent {
 
   selectedTasks: TId[] = [];
 
-  constructor(private tasksService: TasksService) {
+  constructor(public tasksService: TasksService) {
   }
 
   onChange(id: TId) {
