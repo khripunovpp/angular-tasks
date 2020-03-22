@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {icons} from '../shared/icons';
-import {TasksService, TId} from '../shared/tasks.service';
+import {EnumTasksRates, TasksService, TId} from '../shared/tasks.service';
+import {Filter, TFilters} from '../filter/filter.component';
 
 @Component({
   selector: 'app-tasks-table',
@@ -16,6 +17,8 @@ export class TasksTableComponent {
 
   selectedTasks: TId[] = [];
 
+  filters = Array.prototype.concat(['all'], Object.keys(EnumTasksRates));
+
   constructor(public tasksService: TasksService) {
   }
 
@@ -29,6 +32,10 @@ export class TasksTableComponent {
 
   onEdit(id: TId) {
     window.location.href = `/edit/${id}`;
+  }
+
+  onFilter(filter: Filter<TFilters>) {
+    this.tasksService.onFilter(filter);
   }
 
   onSelect(id: TId) {

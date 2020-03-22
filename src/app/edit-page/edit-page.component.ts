@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {EnumRates, ITask, TasksService} from '../shared/tasks.service';
+import {EnumTasksRates, ITask, TasksService} from '../shared/tasks.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 
@@ -10,7 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class EditPageComponent {
 
-  rates = Object.keys(EnumRates);
+  rates = Object.keys(EnumTasksRates);
   submitted = false;
 
   editableTask: ITask;

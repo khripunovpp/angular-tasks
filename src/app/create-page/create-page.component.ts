@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {v4 as uuidv4} from 'uuid';
 
-import {EnumRates, ITask, TasksService} from '../shared/tasks.service';
+import {EnumTasksRates, ITask, TasksService} from '../shared/tasks.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -13,13 +13,13 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class CreatePageComponent {
 
-  rates = Object.keys(EnumRates);
+  rates = Object.keys(EnumTasksRates);
   submitted = false;
 
   tasksForm = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    rate: new FormControl(EnumRates.normal),
+    rate: new FormControl(EnumTasksRates.normal),
     deadlineDate: new FormControl(''),
   });
 

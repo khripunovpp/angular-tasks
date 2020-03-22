@@ -1,6 +1,11 @@
 <div class="tasksTable">
 
-  <app-filter *ngIf="tasksService.tasks.length"></app-filter>
+  <app-filter
+    *ngIf="tasksService.tasks.length"
+    [filtersArr]="filters"
+    [currentFilter]="tasksService.filter"
+    (filterEmitter)="onFilter($event)"
+  ></app-filter>
 
   <table class="table" *ngIf="tasksService.tasks.length>0; else empty">
     <thead class="thead-dark">
@@ -12,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let task of tasksService.tasks | tasksfilter: tasksService.filter" [ngClass]="{
+    <tr *ngFor="let task of tasksService.tasks | tasksratefilter: tasksService.filter.name" [ngClass]="{
       completed: task.completed,
       selected: selectedTasks.includes(task.id)
       }">
@@ -57,14 +62,14 @@
 </div>
 
 <button type="button" class="btn btn-danger"
-        *ngIf="selectedTasks.length && (tasksService.tasks | tasksfilter: tasksService.filter).length"
+        *ngIf="selectedTasks.length && (tasksService.tasks | tasksratefilter: tasksService.filter.name).length"
         (click)="multiRemove()">Delete selected
   tasks
 </button>
 
 <ng-template #empty>
   <app-alert
-    [type]="'danger'"
-    [text]="'No tasks'"
+    type="danger"
+    text="No tasks"
   ></app-alert>
 </ng-template>

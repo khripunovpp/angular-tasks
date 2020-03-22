@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
+import {Filter, TFilter, TFilters} from '../filter/filter.component';
 
 export interface ITask {
   id: TId;
   name: string;
   description: string;
-  rate: EnumRates;
+  rate: EnumTasksRates;
   completed: boolean;
   createdDate: number;
   deadlineDate?: number | null;
@@ -13,21 +14,19 @@ export interface ITask {
 
 export type TId = string;
 
-export enum EnumRates {
+export enum EnumTasksRates {
   normal = 'normal',
   high = 'high',
   highest = 'highest'
 }
-
-export type TRateFilter = 'all' | EnumRates;
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
 
-  rates = EnumRates;
-  filter: TRateFilter = 'all';
+  rates = EnumTasksRates;
+  filter: TFilter = new Filter<TFilters>('all');
 
   public tasks: ITask[] = [];
 
@@ -58,7 +57,7 @@ export class TasksService {
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
-  onFilter(filter: TRateFilter) {
+  onFilter(filter: TFilter) {
     this.filter = filter;
   }
 

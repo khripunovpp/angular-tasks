@@ -1,7 +1,14 @@
 <p>Filter by: </p>
 <div class="filter btn-group" role="group">
-  <button type="button" class="btn"
-          *ngFor="let rate of rates"
-          (click)="onFilter(rate)"
-          [ngClass]="rate === tasksService.filter ? 'btn-dark' : 'btn-light'">{{rate}}</button>
+  <button
+    type="'button"
+    *ngFor="let filter of filters"
+    [class]="[
+      'btn',
+      filter.name === current.name ? 'btn-dark' : 'btn-light'
+    ]"
+    (click)="onFilter(filter.name)"
+  >
+    {{filter.name | titlecase}}
+  </button>
 </div>

@@ -1,20 +1,43 @@
-import {Component} from '@angular/core';
-import {EnumRates, TasksService} from '../shared/tasks.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {EnumTasksRates, TasksService} from '../shared/tasks.service';
+
+export class Filter<T> {
+  public name: T;
+
+  constructor(name: T) {
+    this.name = name;
+  }
+}
+
+export type TFilters = 'all' | EnumTasksRates;
+
+export type TFilter = Filter<TFilters>;
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent {
+export class FilterComponent implements OnInit {
 
-  filter: string;
-  rates = Array.prototype.concat(['all'], Object.keys(EnumRates));
+  @Input() filtersArr: TFilters[];
+  @Input() currentFilter: TFilter;
+  @Output() filterEmitter: EventEmitter<TFilter> = new EventEmitter<TFilter>();
 
-  constructor(public tasksService: TasksService) {
+  private filters: TFilter[];
+  private current: TFilter;
+
+  constructor() {
   }
 
-  onFilter(filter: EnumRates) {
-    this.tasksService.onFilter(filter);
+  ngOnInit() {
+    this.filters = this.filtersArr.map(filter => new Filter<TFilters>(filter));
+    this.current = this.currentFilter;
+  }
+
+  onFilter(name: TFilters) {
+    const payload = new Filter<TFilters>(name);
+    this.current = payload;
+    this.filterEmitter.emit(payload);
   }
 }
