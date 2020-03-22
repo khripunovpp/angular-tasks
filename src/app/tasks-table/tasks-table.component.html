@@ -5,6 +5,7 @@
     [filtersArr]="filters"
     [currentFilter]="tasksService.filter"
     (filterEmitter)="onFilter($event)"
+    #filterRef
   ></app-filter>
 
   <table class="table" *ngIf="tasksService.tasks.length>0; else empty">
@@ -12,6 +13,7 @@
     <tr>
       <th scope="col"></th>
       <th scope="col">Name</th>
+      <th scope="col">Created At</th>
       <th scope="col">Rate</th>
       <th scope="col"></th>
     </tr>
@@ -38,6 +40,9 @@
         <a routerLink="/edit/{{task.id}}">{{ task.name }}</a>
         <small class="completedDate" *ngIf="task.completed">Completed
           at: {{ task.completedDate | date: 'short' }}</small>
+      </td>
+      <td>
+        {{ task.createdDate | date: 'short' }}
       </td>
       <td>
         <span class="badge badge-success" *ngIf="task.rate === tasksService.rates.normal">{{task.rate}}</span>

@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {ITask} from './tasks.service';
+import {Task} from './tasks.service';
 import {TFilters} from '../filter/filter.component';
 
 @Pipe({
@@ -7,7 +7,7 @@ import {TFilters} from '../filter/filter.component';
 })
 export class TasksfilterPipe implements PipeTransform {
 
-  transform(tasks: ITask[], filter: TFilters): ITask[] {
+  transform(tasks: Task[], filter: TFilters): Task[] {
     if (filter === 'all') {
       return tasks;
     }

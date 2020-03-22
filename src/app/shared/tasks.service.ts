@@ -1,15 +1,28 @@
 import {Injectable} from '@angular/core';
 import {Filter, TFilter, TFilters} from '../filter/filter.component';
+import {v4 as uuidv4} from 'uuid';
 
-export interface ITask {
-  id: TId;
-  name: string;
-  description: string;
-  rate: EnumTasksRates;
-  completed: boolean;
-  createdDate: number;
-  deadlineDate?: number | null;
-  completedDate?: number | null;
+export class Task {
+  public id: TId;
+  public name: string;
+  public description: string;
+  public rate: EnumTasksRates;
+  public completed: boolean;
+  public createdDate: number;
+  public deadlineDate?: number | null;
+  public completedDate?: number | null;
+
+  constructor(data: Task) {
+    this.id = uuidv4();
+    this.name = data.name;
+    this.description = data.description;
+    this.rate = data.rate;
+    this.completed = false;
+    this.createdDate = Date.now();
+    this.deadlineDate = data.deadlineDate || null;
+    this.completedDate = null;
+  }
+
 }
 
 export type TId = string;
@@ -28,11 +41,11 @@ export class TasksService {
   rates = EnumTasksRates;
   filter: TFilter = new Filter<TFilters>('all');
 
-  public tasks: ITask[] = [];
+  public tasks: Task[] = [];
 
-  add(task: ITask) {
+  add(task: Task) {
     this.tasks.push(task);
-    this.updateLocalStorage();
+    this.updateDb();
   }
 
   toggle(id: TId) {
@@ -40,20 +53,20 @@ export class TasksService {
     const currentTask = this.tasks[idx];
     currentTask.completed = !this.tasks[idx].completed;
     currentTask.completedDate = Date.now();
-    this.updateLocalStorage();
+    this.updateDb();
   }
 
   remove(id: TId) {
     this.tasks = this.tasks.filter(task => task.id !== id);
-    this.updateLocalStorage();
+    this.updateDb();
   }
 
-  exportFromLocalStorage() {
+  fetchData() {
     const tasks = localStorage.getItem('tasks') || '[]';
     this.tasks = JSON.parse(tasks);
   }
 
-  updateLocalStorage() {
+  updateDb() {
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
@@ -63,18 +76,18 @@ export class TasksService {
 
   onMultiSelect(tasks: TId[]) {
     this.tasks = this.tasks.filter(task => !tasks.includes(task.id));
-    this.updateLocalStorage();
+    this.updateDb();
   }
 
   getTaskInfo(id: TId) {
     return this.tasks.filter(task => task.id === id)[0];
   }
 
-  updateTask(id: TId, updateTask: ITask) {
+  updateTask(id: TId, data: Task) {
     const idx = this.tasks.findIndex(task => task.id === id);
-    this.tasks[idx] = {
-      ...updateTask
-    };
-    this.updateLocalStorage();
+    this.tasks[idx] = new Task({
+      ...data
+    });
+    this.updateDb();
   }
 }

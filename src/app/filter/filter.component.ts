@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EnumTasksRates, TasksService} from '../shared/tasks.service';
+import {EnumTasksRates} from '../shared/tasks.service';
 
 export class Filter<T> {
   public name: T;
@@ -24,8 +24,8 @@ export class FilterComponent implements OnInit {
   @Input() currentFilter: TFilter;
   @Output() filterEmitter: EventEmitter<TFilter> = new EventEmitter<TFilter>();
 
-  private filters: TFilter[];
-  private current: TFilter;
+  public filters: TFilter[];
+  public current: TFilter;
 
   constructor() {
   }

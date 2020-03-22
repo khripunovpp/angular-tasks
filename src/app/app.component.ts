@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private tasksService: TasksService) {
   }
 
-  ngOnInit(): void {
-    this.tasksService.exportFromLocalStorage();
+  ngOnInit() {
+    this.tasksService.fetchData();
   }
 }

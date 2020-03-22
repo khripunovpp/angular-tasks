@@ -3,8 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {v4 as uuidv4} from 'uuid';
 
-import {EnumTasksRates, ITask, TasksService} from '../shared/tasks.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {EnumTasksRates, Task, TasksService} from '../shared/tasks.service';
 
 @Component({
   selector: 'app-create-page',
@@ -43,9 +42,9 @@ export class CreatePageComponent {
     this.onAdd(this.tasksForm.value);
   }
 
-  onAdd(data: ITask) {
+  onAdd(data: Task) {
     const deadlineTimestamp = new Date(data.deadlineDate);
-    const task: ITask = {
+    const task = new Task({
       id: uuidv4(),
       name: data.name,
       description: data.description,
@@ -53,7 +52,7 @@ export class CreatePageComponent {
       rate: data.rate,
       completed: false,
       deadlineDate: deadlineTimestamp.getTime()
-    };
+    });
 
     this.tasksService.add(task);
     window.location.href = '';

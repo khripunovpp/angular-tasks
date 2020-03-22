@@ -13,7 +13,7 @@ export class TasksTableComponent {
   iconEdit = icons.iconEdit;
   iconRemove = icons.iconRemove;
 
-  dateNow = new Date().getTime();
+  dateNow = Date.now();
 
   selectedTasks: TId[] = [];
 

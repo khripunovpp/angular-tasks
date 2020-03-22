@@ -11,8 +11,8 @@ import {CreatePageComponent} from './create-page/create-page.component';
 import {EditPageComponent} from './edit-page/edit-page.component';
 import {AlertComponent} from './alert/alert.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { TasksfilterPipe } from './shared/tasksfilter.pipe';
-import { FilterComponent } from './filter/filter.component';
+import {TasksfilterPipe} from './shared/tasksfilter.pipe';
+import {FilterComponent} from './filter/filter.component';
 
 const appRoutes: Routes = [
   {

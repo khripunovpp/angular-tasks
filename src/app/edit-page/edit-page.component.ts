@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {EnumTasksRates, ITask, TasksService} from '../shared/tasks.service';
+import {EnumTasksRates, Task, TasksService} from '../shared/tasks.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 
@@ -13,7 +13,7 @@ export class EditPageComponent {
   rates = Object.keys(EnumTasksRates);
   submitted = false;
 
-  editableTask: ITask;
+  editableTask: Task;
 
   tasksForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -55,9 +55,9 @@ export class EditPageComponent {
     this.onUpdate(this.tasksForm.value);
   }
 
-  onUpdate(data: ITask) {
+  onUpdate(data: Task) {
     const deadlineTimestamp = new Date(data.deadlineDate);
-    const task: ITask = {
+    const task = new Task({
       id: this.editableTask.id,
       name: data.name,
       description: data.description,
@@ -65,7 +65,7 @@ export class EditPageComponent {
       rate: data.rate,
       completed: this.editableTask.completed,
       deadlineDate: deadlineTimestamp.getTime()
-    };
+    });
 
     this.tasksService.updateTask(this.editableTask.id, task);
     window.location.href = '';
