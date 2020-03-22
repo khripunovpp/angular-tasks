@@ -48,6 +48,10 @@ export class TasksTableComponent {
   }
 
   multiRemove() {
+    const isOk = confirm('Do you want to delete all these tasks?');
+    if (!isOk) {
+      return;
+    }
     this.tasksService.onMultiSelect(this.selectedTasks);
     this.selectedTasks = [];
   }

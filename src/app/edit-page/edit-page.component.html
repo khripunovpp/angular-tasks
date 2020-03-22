@@ -32,9 +32,13 @@
   </div>
 
   <div class="form-group">
-    <label for="description">Deadline</label>
+    <label for="deadline">Deadline</label>
     <div>
-      <small>Current: {{editableTask.deadlineDate | date: 'short'}}</small></div>
+      <small>Current: {{editableTask.deadlineDate
+        ? (editableTask.deadlineDate | date: 'short')
+        : 'none'}}
+      </small>
+    </div>
     <input type="date" class="form-control" id="deadline" formControlName="deadlineDate">
   </div>
 

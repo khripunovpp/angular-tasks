@@ -70,6 +70,4 @@ export class EditPageComponent {
     this.tasksService.updateTask(this.editableTask.id, task);
     window.location.href = '';
   }
-
-
 }

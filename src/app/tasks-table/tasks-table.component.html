@@ -57,8 +57,7 @@
           <fa-icon [icon]="iconRemove"></fa-icon>
         </button>
         <button type="button" class="btn btn-outline-success btn-sm" (click)="onChange(task.id)">
-          <span *ngIf="task.completed">Reopen</span>
-          <span *ngIf="!task.completed">Done</span>
+          <span>{{task.completed ? 'Reopen' : 'Done'}}</span>
         </button>
       </td>
     </tr>
@@ -67,7 +66,8 @@
 </div>
 
 <button type="button" class="btn btn-danger"
-        *ngIf="selectedTasks.length && (tasksService.tasks | tasksratefilter: tasksService.filter.name).length"
+        *ngIf="selectedTasks.length
+          && (tasksService.tasks | tasksratefilter: tasksService.filter.name).length"
         (click)="multiRemove()">Delete selected
   tasks
 </button>
